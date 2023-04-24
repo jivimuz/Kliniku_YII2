@@ -58,7 +58,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 'label' => 'Master',
                 'url' => ['site/index'],
                 'options'=>['class'=>'dropdown'],
-                'visible' => !Yii::$app->user->isGuest,
+                'visible' => !Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1,
                 'template' => '<a href="{url}" class="href_class">{label}</a>',
                 'items' => [
                     ['label' => 'Wilayah', 'url' => ['/master/wilayah']],
@@ -72,7 +72,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 'label' => 'Transaksi',
                 'url' => ['site/index'],
                 'options'=>['class'=>'dropdown'],
-                'visible' => !Yii::$app->user->isGuest,
+                'visible' => !Yii::$app->user->isGuest && (Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3),
                 'template' => '<a href="{url}" class="href_class">{label}</a>',
                 'items' => [
                     ['label' => 'Pasien', 'url' => ['/transaksi/pasien']],

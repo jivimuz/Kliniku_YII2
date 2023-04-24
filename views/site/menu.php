@@ -57,30 +57,35 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php  
         $role = Yii::$app->session->get('users')->role;
         if($role == 1){?>
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <h2>Master</h2>
-            </div>
-            <div class="col-lg-6">
-                <h2>Transaksi</h2>
-            </div>
-            <div class="col-lg-2">
+                <div class="col-lg-6">
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/wilayah']) ?>">Wilayah &raquo;</a></p>
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['user/index']) ?>">User &raquo;</a></p>
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/obat']) ?>">Obat &raquo;</a></p>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-6">
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/pegawai']) ?>">Pegawai &raquo;</a></p>
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/tindakan']) ?>">Tindakan &raquo;</a></p>
             </div>
-            <div class="col-lg-2">
             </div>
             <div class="col-lg-2">
+            </div>
+        <?php } 
+        if($role == 3 || $role == 1){ ?>
+            <div class="col-lg-5">
+                <h2>Transaksi</h2>
+                
+            
+            <div class="col-lg-6">
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pasien']) ?>">Pasien &raquo;</a></p>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-6">
                 <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pemeriksaan']) ?>">Pemeriksaan &raquo;</a></p>
             </div>
-        <?php }?>
+            </div>
+        <?php } ?>
+            
         </div>
        
     </div>
