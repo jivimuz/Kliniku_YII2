@@ -16,7 +16,7 @@ $form = ActiveForm::begin([
 ]) ?>
 
     <?= $form->field($model, 'id_user')->label('Nama')->dropDownList(
-    ArrayHelper::map(Users::find()->all(), 'id_user', 'nama_user')
+    ArrayHelper::map(Users::find()->all(), 'id_user', 'username', 'nama_user')
     ) ?>
     
     <?= $form->field($model, 'telepon_pegawai')->label('Telepon')->input('number') ?>

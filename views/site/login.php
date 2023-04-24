@@ -49,7 +49,7 @@ $this->title = 'Login';
 
 <?php ActiveForm::end(); ?>
     <div class="offset-lg-1" style="color:#999;">
-    <strong>*bisa menggunakan user admin/user/pegawai dengan password 123123.<br></strong>
+    <strong>*bisa menggunakan user admin/master/pegawai dengan password 123123.<br></strong>
     </div>
   <!-- Script -->
       <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>

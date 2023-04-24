@@ -13,7 +13,7 @@ class Pemeriksaan extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_pasien', 'id_pegawai', 'id_obat', 'id_tindakan', 'id_wilayah', 'keterangan'], 'required'],
+            [['id_pasien', 'id_pegawai', 'id_wilayah', 'keterangan'], 'required'],
         ];
     }
     public function getPasien() 
@@ -24,16 +24,10 @@ class Pemeriksaan extends ActiveRecord
     {
         return $this->hasOne(Pegawai::className(), ['id_pegawai' => 'id_pegawai']);
     }
-    public function getTindakan() 
-    {
-        return $this->hasOne(Tindakan::className(), ['id_tindakan' => 'id_tindakan']);
-    }    
+    
     public function getWilayah() 
     {
         return $this->hasOne(Wilayah::className(), ['id_wilayah' => 'id_wilayah']);
     }    
-    public function getObat() 
-    {
-        return $this->hasOne(Obat::className(), ['id_obat' => 'id_obat']);
-    }    
+    
 }

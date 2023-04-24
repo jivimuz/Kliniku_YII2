@@ -19,7 +19,7 @@
                 <div class="col-sm-6">
                     <h6 class="mb-3">Pasien :</h6>
                     <div>
-                        <strong><?= $data->pasien->nama_pasien ?></strong>
+                       Nama : <strong><?= $data->pasien->nama_pasien ?></strong>
                     </div>
                     <div>
                         Tanggal Lahir : <?= $data->pasien->ttl_pasien ?>
@@ -42,7 +42,7 @@
                 <div class="col-sm-6">
                     <h6 class="mb-3">Pegawai :</h6>
                     <div>
-                        <strong><?= $data->pegawai->users->nama_user ?></strong>
+                    Nama : <strong><?= $data->pegawai->users->nama_user ?></strong>
                     </div>
                     <div>
                         Email : <?= $data->pegawai->email_pegawai ?>
@@ -59,11 +59,8 @@
                 </div>
             </div>
             <div class="row mb-4" style="border: solid 1px #6c757d; padding: 5px;">
-                <div class="col-sm-6">
-                    <strong>Hasil Pemeriksaan :</strong><br>
-                    <?= $data->tindakan->nama_tindakan ?>
-                </div>
-                <div class="col-sm-6">
+                
+                <div class="col-sm-12">
                     <strong>Keterangan (tambahan) :</strong><br>
                     <?= $data->keterangan ?>
                 </div>
@@ -86,7 +83,7 @@
                             <td class="left strong">Pendaftaran</td>
                             <td class="left">Biaya pendaftaran pasien</td>
 
-                            <td class="right">Rp. 10000</td>
+                            <td class="right">Rp. 10.000,-</td>
                             <td class="center">1</td>
                             <td class="right">Rp.10.000,-</td>
                         </tr>
@@ -97,17 +94,26 @@
 
                             <td class="right">Rp. 30.000,-</td>
                             <td class="center">1</td>
-                            <td class="right">Rp.30000</td>
+                            <td class="right">Rp.30.000,-</td>
                         </tr>
+                        <?php 
+                        $a = 40000;
+                        $no = 3;
+                        foreach($obats as $i):
+                        $a = $a + ($i->obat->harga_obat * $i->jml_obat);
+                        ?>
                         <tr>
-                            <td class="center">3</td>
-                            <td class="left">Obat</td>
-                            <td class="left"><?= $data->obat->nama_obat ?></td>
+                            <td class="center"><?=$no?></td>
+                            <td class="left">Obat <?= $i->obat->nama_obat ?></td>
+                            <td class="left"><?php echo isset($i->tindakan) ? $i->tindakan->nama_tindakan : '-'; ?></td>
 
-                            <td class="right">Rp.<?= buatRupiah($data->obat->harga_obat) ?></td>
-                            <td class="center">1</td>
-                            <td class="right">Rp.<?= buatRupiah($data->obat->harga_obat) ?></td>
+                            <td class="right">Rp.<?= buatRupiah($i->obat->harga_obat) ?></td>
+                            <td class="center"><?= $i->jml_obat?></td>
+                            <td class="right">Rp.<?= buatRupiah($i->obat->harga_obat) ?></td>
                         </tr>
+                        <?php 
+                        $no++;
+                        endforeach; ?>
                     </tbody>
                 </table>
             </div>
@@ -123,10 +129,7 @@
                                 </td>
                                 <td class="right">
                                     : 
-                                    Rp.<?php
-                                        $a = 40000; 
-                                        $b = $data->obat->harga_obat;
-                                        echo buatRupiah($a + $b);                             
+                                    Rp.<?= buatRupiah($a);                             
                                     ?>
                                 </td>
                             </tr>
@@ -137,10 +140,7 @@
                                 <td class="right">
                                     : 
                                     <strong>
-                                        Rp.<?php
-                                            $a = 40000; 
-                                            $b = $data->obat->harga_obat;
-                                            echo buatRupiah($a + $b);                             
+                                        Rp.<?=buatRupiah($a);                             
                                         ?>
                                     </strong>
                                 </td>

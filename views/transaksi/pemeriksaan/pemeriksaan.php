@@ -19,8 +19,8 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Nama Pasien</th>
-              <!-- <th scope="col">Nama Pegawai</th> -->
-              <th scope="col">Tindakan yang diambil</th>
+              <th scope="col">Nama Pegawai</th>
+              <!-- <th scope="col">Tindakan yang diambil</th> -->
               <!-- <th scope="col">Obat yang digunakan</th> -->
               <!-- <th scope="col">Keterangan</th> -->
               <th scope="col">Pilihan</th>
@@ -33,11 +33,9 @@
           <tr>
             <th><?= $d->id_pemeriksaan ?></th>
             <th><?= $d->pasien->nama_pasien ?></th>
-            <!-- <th><?= $d->pegawai->users->nama_user ?></th> -->
-            <th><?= $d->tindakan->nama_tindakan ?></th>
-            <!-- <th><?= $d->obat->nama_obat ?></th> -->
-            <!-- <th><?= $d->keterangan ?></th> -->
+            <th><?= $d->pegawai->users->nama_user ?></th>
               <td>
+                <a class="btn btn-warning" href="<?= Url::toRoute(['transaksi/pengobatan', 'id' => $d->id_pemeriksaan])?>">Pengobatan</a>
                 <a class="btn btn-info" href="<?= Url::toRoute(['transaksi/detail-pemeriksaan', 'id' => $d->id_pemeriksaan])?>">Invoice</a>
                 <a class="btn btn-success" href="<?= Url::toRoute(['transaksi/edit-pemeriksaan', 'id' => $d->id_pemeriksaan])?>">Edit</a>
                 <!-- <a class="btn btn-danger" href="<?= Url::toRoute(['transaksi/hapus-pemeriksaan', 'id' => $d->id_pemeriksaan])?>">Hapus</a> -->

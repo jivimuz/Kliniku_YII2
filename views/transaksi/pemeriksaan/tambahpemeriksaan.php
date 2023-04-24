@@ -6,9 +6,9 @@
     use yii\helpers\ArrayHelper;
     use app\models\Pasien;
     use app\models\Pegawai;
-    use app\models\Tindakan;
+    // use app\models\Tindakan;
     use app\models\Wilayah;
-    use app\models\Obat;
+    // use app\models\Obat;
 ?>
 
 <h3>Tambah Data Pemeriksaan</h3>
@@ -24,12 +24,6 @@ $form = ActiveForm::begin([
 
     <?= $form->field($model, 'id_pegawai')->label('Pegawai yang bertugas')->dropDownList(
     ArrayHelper::map(Pegawai::find()->all(), 'id_pegawai', 'id_user'), ['prompt'=>'Pilih Pegawai']) ?>
-
-    <?= $form->field($model, 'id_obat')->label('Obat')->dropDownList(
-    ArrayHelper::map(Obat::find()->all(), 'id_obat', 'nama_obat'), ['prompt'=>'Pilih Obat']) ?>
-
-    <?= $form->field($model, 'id_tindakan')->label('Hasil Pemeriksaan')->dropDownList(
-    ArrayHelper::map(Tindakan::find()->all(), 'id_tindakan', 'nama_tindakan'), ['prompt'=>'Pilih Hasil Pemeriksaan']) ?>
 
     <?= $form->field($model, 'id_wilayah')->label('Lokasi Rujukan')->dropDownList(
     ArrayHelper::map(Wilayah::find()->all(), 'id_wilayah', 'nama_wilayah'), ['prompt'=>'Pilih Lokasi Rujukan'])?>

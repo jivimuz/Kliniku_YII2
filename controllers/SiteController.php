@@ -83,8 +83,15 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $user_id = TblUser::find()->where(['username'=>$model->username])->one();
-            Yii::$app->session->set('users', $user_id);
-            $model->login();
+            if($user_id !== null){
+                Yii::$app->session->set('users', $user_id);
+                $model->login();
+            }else{
+                return $this->render('login', [
+                    'model' => $model,
+                ]);
+            }
+            
             // return $this->render('menu');
         return $this->redirect(['site/menu']);
         }
@@ -139,7 +146,8 @@ class SiteController extends Controller
      public function actionMenu()
     {
         $data = Yii::$app->db->createCommand(
-            'select nama_obat, count(pemeriksaan.id_obat) as jml from pemeriksaan JOIN obat ON pemeriksaan.id_obat = obat.id_obat group by pemeriksaan.id_obat'
+            'select nama_obat, count(pengobatan.id_obat) as jml from pengobatan 
+            JOIN obat ON pengobatan.id_obat = obat.id_obat group by pengobatan.id_obat'
             )->queryAll();
         return $this->render('menu',  ['data' => $data]);
     }

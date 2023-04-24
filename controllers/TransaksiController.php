@@ -12,6 +12,7 @@ use app\models\Pasien;
 use app\models\Pemeriksaan;
 use app\models\Tindakan;
 use app\models\Users;
+use app\models\Pengobatan;
 
 class TransaksiController extends Controller
 {
@@ -57,13 +58,14 @@ class TransaksiController extends Controller
     public function actionPemeriksaan()
     {
         $data = Pemeriksaan::find()
-        ->joinWith('tindakan')->all();
+        ->joinWith('pegawai')->all();
         return $this->render('pemeriksaan/pemeriksaan', compact('data'));
     }
     public function actionDetailPemeriksaan($id)
     {
         $data = Pemeriksaan::findOne($id);
-        return $this->render('pemeriksaan/detailpemeriksaan', compact('data'));
+        $obats = Pengobatan::find()->joinWith('obat')->joinWith('tindakan')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
+        return $this->render('pemeriksaan/detailpemeriksaan', compact('data', 'obats'));
     }
     public function actionTambahPemeriksaan()
     {
@@ -86,5 +88,37 @@ class TransaksiController extends Controller
         else{
             return $this->render('pemeriksaan/editpemeriksaan', compact('model'));
         }
+    }
+
+    public function actionPengobatan($id)
+    {
+        $data = Pengobatan::find()->joinWith('obat')->joinWith('tindakan')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
+        return $this->render('pengobatan/pengobatan', [
+            'data' => $data, 'id' => $id
+        ]);
+    }
+    public function actionCreatepengobatan($id)
+    {
+        $model = new Pengobatan();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+        }
+
+        return $this->render('pengobatan/createpengobatan', [
+            'model' => $model, 'id' => $id
+        ]);
+    }
+
+    public function actionPengobatandelete($id, $idp)
+    {
+        $model = Pengobatan::findOne($idp);
+        if (!$model) {
+            throw new NotFoundHttpException('Data not found.');
+        }
+        $model->delete();
+
+        return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+
     }
 }

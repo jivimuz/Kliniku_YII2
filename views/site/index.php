@@ -13,8 +13,8 @@ $this->title = 'Si Klinik';
         <?php 
         if(Yii::$app->user->isGuest){?>
     <div class="row">
-        <div class="col-md-6 text-right"> <a class="btn btn-lg btn-outline-primary" href="<?= Yii::$app->urlManager->createUrl(['user/create']) ?>">Daftar Peserta</a></div>
-        <div class="col-md-6 text-left"><a class="btn btn-lg btn-outline-success" href="<?= Yii::$app->urlManager->createUrl(['site/login']) ?>">Login</a></div>
+        <!-- <div class="col-md-6 text-right"> <a class="btn btn-lg btn-outline-primary" href="<?= Yii::$app->urlManager->createUrl(['user/create']) ?>">Daftar Peserta</a></div> -->
+        <div class="col-md-12 "><a class="btn btn-lg btn-outline-success" href="<?= Yii::$app->urlManager->createUrl(['site/login']) ?>">Login</a></div>
         </div>
         <?php } else {?>
         <a class="btn btn-lg btn-outline-success" href="<?= Yii::$app->urlManager->createUrl(['site/menu']) ?>">Masuk Menu</a>

@@ -55,19 +55,25 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             // ['label' => 'About', 'url' => ['/site/about']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
             [
+                'label' => 'Menu User',
+                'url' => ['user/index'],
+                'visible' => !Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1,
+                'template' => '<a href="{url}" class="href_class">{label}</a>',
+            ],
+            [
                 'label' => 'Master',
                 'url' => ['site/index'],
                 'options'=>['class'=>'dropdown'],
-                'visible' => !Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1,
+                'visible' => !Yii::$app->user->isGuest && (Yii::$app->session->get('users')->role == 1 ||Yii::$app->session->get('users')->role == 2 ),
                 'template' => '<a href="{url}" class="href_class">{label}</a>',
                 'items' => [
                     ['label' => 'Wilayah', 'url' => ['/master/wilayah']],
-                    ['label' => 'User', 'url' => ['/user/index']],
                     ['label' => 'Pegawai', 'url' => ['/master/pegawai']],
                     ['label' => 'Tindakan', 'url' => ['/master/tindakan']],
                     ['label' => 'Obat', 'url' => ['/master/obat']],
                 ]
             ],
+            
             [
                 'label' => 'Transaksi',
                 'url' => ['site/index'],

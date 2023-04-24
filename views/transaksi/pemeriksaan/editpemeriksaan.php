@@ -6,8 +6,8 @@
     use yii\helpers\ArrayHelper;
     use app\models\Pasien;
     use app\models\Pegawai;
-    use app\models\Tindakan;
-    use app\models\Obat;
+    // use app\models\Tindakan;
+    // use app\models\Obat;
 ?>
 
 <h3>Edit Data Pemeriksaan</h3>
@@ -22,10 +22,8 @@ $form = ActiveForm::begin([
     ArrayHelper::map(Pasien::find()->all(), 'id_pasien', 'nama_pasien')) ?>
     <?= $form->field($model, 'id_pegawai')->label('Pegawai')->dropDownList(
     ArrayHelper::map(Pegawai::find()->all(), 'id_pegawai', 'id_user')) ?>
-    <?= $form->field($model, 'id_tindakan')->label('Tindakan')->dropDownList(
-    ArrayHelper::map(Tindakan::find()->all(), 'id_tindakan', 'nama_tindakan')) ?>
-    <?= $form->field($model, 'id_obat')->label('Obat')->dropDownList(
-    ArrayHelper::map(Obat::find()->all(), 'id_obat', 'nama_obat')) ?>
+    
+    
     <?= $form->field($model, 'keterangan')->label('Keterangan (tambahan)') ?>
 
     <div class="form-group">
