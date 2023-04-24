@@ -36,13 +36,14 @@ CREATE TABLE IF NOT EXISTS `obat` (
   `nama_obat` varchar(50) COLLATE utf8mb3_bin NOT NULL DEFAULT '',
   `harga_obat` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_obat`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 -- Membuang data untuk tabel kliniku.obat: ~2 rows (lebih kurang)
 INSERT INTO `obat` (`id_obat`, `nama_obat`, `harga_obat`) VALUES
 	(1, 'Paramex', 2500),
 	(2, 'Oskadon', 4000),
-	(3, 'Osagi', 1000);
+	(3, 'Osagi', 1000),
+	(4, 'panadol', 1400);
 
 -- membuang struktur untuk table kliniku.pasien
 CREATE TABLE IF NOT EXISTS `pasien` (
@@ -53,12 +54,13 @@ CREATE TABLE IF NOT EXISTS `pasien` (
   `alamat_pasien` varchar(255) COLLATE utf8mb3_bin NOT NULL DEFAULT '0',
   `telepon_pasien` varchar(50) COLLATE utf8mb3_bin NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_pasien`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 -- Membuang data untuk tabel kliniku.pasien: ~0 rows (lebih kurang)
 INSERT INTO `pasien` (`id_pasien`, `nama_pasien`, `ttl_pasien`, `jenis_kelamin_pasien`, `alamat_pasien`, `telepon_pasien`) VALUES
 	(1, 'test', '2023-04-23', '0', 'awedqw', '082120741970'),
-	(2, 'iwan', '2023-04-24', '1', 'awedqw', '123123213');
+	(2, 'iwan', '2023-04-24', '1', 'awedqw', '123123213'),
+	(3, 'adi', '2001-04-07', '1', 'jl. gatot kaca', '082120754044');
 
 -- membuang struktur untuk table kliniku.pegawai
 CREATE TABLE IF NOT EXISTS `pegawai` (
@@ -79,28 +81,49 @@ CREATE TABLE IF NOT EXISTS `pemeriksaan` (
   `id_pemeriksaan` int NOT NULL AUTO_INCREMENT,
   `id_pasien` int NOT NULL DEFAULT '0',
   `id_pegawai` int NOT NULL DEFAULT '0',
-  `id_obat` int NOT NULL DEFAULT '0',
-  `id_tindakan` int NOT NULL DEFAULT '0',
   `id_wilayah` int NOT NULL DEFAULT '0',
   `keterangan` varchar(255) COLLATE utf8mb3_bin DEFAULT '0',
   PRIMARY KEY (`id_pemeriksaan`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 -- Membuang data untuk tabel kliniku.pemeriksaan: ~0 rows (lebih kurang)
-INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `id_pasien`, `id_pegawai`, `id_obat`, `id_tindakan`, `id_wilayah`, `keterangan`) VALUES
-	(1, 1, 1, 1, 1, 1, '1dasd');
+INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `id_pasien`, `id_pegawai`, `id_wilayah`, `keterangan`) VALUES
+	(1, 1, 1, 1, '1dasd'),
+	(2, 2, 1, 1, 'adsada'),
+	(3, 1, 1, 2, 'adsada'),
+	(4, 2, 1, 2, '123123'),
+	(5, 2, 1, 2, '123123');
+
+-- membuang struktur untuk table kliniku.pengobatan
+CREATE TABLE IF NOT EXISTS `pengobatan` (
+  `id_pengobatan` int NOT NULL AUTO_INCREMENT,
+  `id_obat` int NOT NULL,
+  `jml_obat` int NOT NULL DEFAULT '1',
+  `id_tindakan` int DEFAULT '0',
+  `id_pemeriksaan` int NOT NULL,
+  PRIMARY KEY (`id_pengobatan`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+
+-- Membuang data untuk tabel kliniku.pengobatan: ~0 rows (lebih kurang)
+INSERT INTO `pengobatan` (`id_pengobatan`, `id_obat`, `jml_obat`, `id_tindakan`, `id_pemeriksaan`) VALUES
+	(2, 3, 1, 1, 1),
+	(3, 2, 3, 0, 1),
+	(6, 4, 1, 0, 1),
+	(7, 1, 1, 0, 1),
+	(8, 2, 1, 0, 4);
 
 -- membuang struktur untuk table kliniku.tindakan
 CREATE TABLE IF NOT EXISTS `tindakan` (
   `id_tindakan` int NOT NULL AUTO_INCREMENT,
   `nama_tindakan` varchar(255) COLLATE utf8mb3_bin NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_tindakan`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 -- Membuang data untuk tabel kliniku.tindakan: ~0 rows (lebih kurang)
 INSERT INTO `tindakan` (`id_tindakan`, `nama_tindakan`) VALUES
-	(1, 'suntik mati'),
-	(2, 'suntik rabies');
+	(1, 'Obat 3x1'),
+	(2, 'Obat 2x1'),
+	(3, 'Suntik Cairan');
 
 -- membuang struktur untuk table kliniku.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -122,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Membuang data untuk tabel kliniku.users: ~3 rows (lebih kurang)
 INSERT INTO `users` (`id_user`, `username`, `nama_user`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `role`, `status`, `accessToken`, `created_at`, `updated_at`) VALUES
 	(1, 'admin', 'jivi', 'jivi12313', '$2y$13$E9Gl0t7Ye2puITpW6JdViOgaAkE5N8LKzFN6iJivqzvqdw8CI68uu', NULL, 'jivisada@gmail.com', 1, 10, '112-token', '', NULL),
-	(2, 'user', 'jivi', 'jivi12313', '$2y$13$xeoUVoI9d75DIpHRzrpdMetxil1L/E48gbm/4NRx0tmrWsMq9fmYm', NULL, 'jivirasgal@gmail.com', 2, 10, '112-token', '', NULL),
+	(2, 'master', 'jivi', 'jivi12313', '$2y$13$xeoUVoI9d75DIpHRzrpdMetxil1L/E48gbm/4NRx0tmrWsMq9fmYm', NULL, 'jivirasgal@gmail.com', 2, 10, '112-token', '', NULL),
 	(3, 'pegawai', 'jivi', 'jivi12313', '$2y$13$JjnO/rNkU9KFkcCLLat7pOwZ8j72E1q6Bmf7/LtibZYmj2xRkIe9.', NULL, 'jiuv@gmail.com', 3, 10, '112-token', '', NULL);
 
 -- membuang struktur untuk table kliniku.wilayah
