@@ -40,7 +40,7 @@ $this->title = 'Login';
 <?= $form->field($model, 'rememberMe')->checkbox([
     'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
 ]) ?>
-
+    
 <div class="form-group">
     <div class="col-lg-offset-1 col-lg-11">
         <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
@@ -48,5 +48,8 @@ $this->title = 'Login';
 </div>
 
 <?php ActiveForm::end(); ?>
+    <div class="offset-lg-1" style="color:#999;">
+    <strong>*bisa menggunakan user admin/user/pegawai dengan password 123123.<br></strong>
+    </div>
   <!-- Script -->
       <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
