@@ -49,7 +49,7 @@ class UserController extends Controller
             'dataProvider' => $dataProvider,
         ]);
         } else {
-            return $this->redirect(['create']);
+            return $this->redirect(['site/menu']);
         }
     }
 
@@ -73,7 +73,8 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new ListUser();
+        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+            $model = new ListUser();
 
         if (($model->load(Yii::$app->request->post()))) {
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
@@ -91,6 +92,7 @@ class UserController extends Controller
                 'model' => $model,
             ]);
         }
+    }
 
         
     }
@@ -104,7 +106,8 @@ class UserController extends Controller
      */
     public function actionUpdate($id_user)
     {
-        $model = $this->findModel($id_user);
+        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+            $model = $this->findModel($id_user);
 
         if (($model->load(Yii::$app->request->post()))) {
             $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
@@ -118,6 +121,7 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+    }
 
     /**
      * Deletes an existing User model.
@@ -128,9 +132,11 @@ class UserController extends Controller
      */
     public function actionDelete($id_user)
     {
-        $this->findModel($id_user)->delete();
+        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+            $this->findModel($id_user)->delete();
 
         return $this->redirect(['index']);
+        }else{ return $this->goback(); }
     }
 
     /**
