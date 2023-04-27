@@ -12,6 +12,9 @@ use app\models\Pasien;
 use app\models\Pemeriksaan;
 use app\models\Tindakan;
 use app\models\Users;
+if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
+    return $this->redirect(['site/logout']);
+}
 class MasterController extends Controller
 {
     // ========================================================Obat========================================================

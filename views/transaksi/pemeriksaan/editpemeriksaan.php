@@ -19,20 +19,19 @@ $form = ActiveForm::begin([
 ]) ?>
 
 <?php
-        $listPasien = Pasien::find()->select(['nik', 'nama_pasien'])->column();
+        // $listPasien = Pasien::find()->select(['nik', 'nama_pasien'])->column();
 
-        echo $form->field($model, 'nik')->label('NIK Pasien')->widget(\yii\jui\AutoComplete::classname(), [
-            'options' => ['class' => 'form-control'],
-            'clientOptions' => [
-                'source' => $listPasien,
-                'minLength' => 2,
+        // echo $form->field($model, 'nik')->label('NIK Pasien')->widget(\yii\jui\AutoComplete::classname(), [
+        //     'options' => ['class' => 'form-control'],
+        //     'clientOptions' => [
+        //         'source' => $listPasien,
+        //         'minLength' => 2,
                 
-                'prompt' => 'Pilih Pasien',
-            ],
-        ]);
-
-
+        //         'prompt' => 'Pilih Pasien',
+        //     ],
+        // ]);
 ?>
+    <?= $form->field($model, 'nik')->label('NIK')->textInput(['type' => 'number', 'readonly' => true]) ?>
     <?= $form->field($model, 'id_pegawai')->label('Pegawai')->dropDownList(
     ArrayHelper::map(Pegawai::find()->all(), 'id_pegawai', 'email_pegawai')) ?>
     

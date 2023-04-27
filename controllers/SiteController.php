@@ -16,6 +16,10 @@ use app\models\Pasien;
 use app\models\Pemeriksaan;
 use app\models\Pengobatan;
 
+if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
+    return $this->redirect(['site/logout']);
+}
+
 class SiteController extends Controller
 {
     /**
@@ -112,7 +116,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->session->remove('user');
+        Yii::$app->session->remove('users');
         Yii::$app->user->logout();
 
         return $this->goHome();

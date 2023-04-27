@@ -16,60 +16,8 @@
 
 
 -- Membuang struktur basisdata untuk kliniku
-CREATE DATABASE IF NOT EXISTS `kliniku` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `kliniku`;
-
--- membuang struktur untuk table kliniku.auth_assignment
-CREATE TABLE IF NOT EXISTS `auth_assignment` (
-  `item_name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `user_id` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `created_at` int DEFAULT NULL,
-  PRIMARY KEY (`item_name`,`user_id`),
-  KEY `idx-auth_assignment-user_id` (`user_id`),
-  CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
--- Membuang data untuk tabel kliniku.auth_assignment: ~0 rows (lebih kurang)
-
--- membuang struktur untuk table kliniku.auth_item
-CREATE TABLE IF NOT EXISTS `auth_item` (
-  `name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `type` smallint NOT NULL,
-  `description` text COLLATE utf8mb3_unicode_ci,
-  `rule_name` varchar(64) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
-  `data` blob,
-  `created_at` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  PRIMARY KEY (`name`),
-  KEY `rule_name` (`rule_name`),
-  KEY `idx-auth_item-type` (`type`),
-  CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
--- Membuang data untuk tabel kliniku.auth_item: ~0 rows (lebih kurang)
-
--- membuang struktur untuk table kliniku.auth_item_child
-CREATE TABLE IF NOT EXISTS `auth_item_child` (
-  `parent` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`),
-  CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
--- Membuang data untuk tabel kliniku.auth_item_child: ~0 rows (lebih kurang)
-
--- membuang struktur untuk table kliniku.auth_rule
-CREATE TABLE IF NOT EXISTS `auth_rule` (
-  `name` varchar(64) COLLATE utf8mb3_unicode_ci NOT NULL,
-  `data` blob,
-  `created_at` int DEFAULT NULL,
-  `updated_at` int DEFAULT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
-
--- Membuang data untuk tabel kliniku.auth_rule: ~0 rows (lebih kurang)
+CREATE DATABASE IF NOT EXISTS `antm4785_kliniku` /*!40100 DEFAULT CHARACTER SET utf8mb3 COLLATE utf8mb3_bin */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `antm4785_kliniku`;
 
 -- membuang struktur untuk table kliniku.migration
 CREATE TABLE IF NOT EXISTS `migration` (
@@ -95,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `obat` (
   PRIMARY KEY (`id_obat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Membuang data untuk tabel kliniku.obat: ~4 rows (lebih kurang)
+-- Membuang data untuk tabel kliniku.obat: ~2 rows (lebih kurang)
 INSERT INTO `obat` (`id_obat`, `nama_obat`, `harga_obat`, `stock`) VALUES
 	(1, 'Paramex', 2500, 13),
 	(2, 'Oskadon', 4000, 11),
@@ -134,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
   UNIQUE KEY `email_pegawai` (`email_pegawai`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Membuang data untuk tabel kliniku.pegawai: ~2 rows (lebih kurang)
+-- Membuang data untuk tabel kliniku.pegawai: ~0 rows (lebih kurang)
 INSERT INTO `pegawai` (`id_pegawai`, `id_user`, `telepon_pegawai`, `email_pegawai`, `nip_pegawai`) VALUES
 	(1, 1, '123123', 'gilangsupratman@gmail.com', 123123),
 	(2, 3, '1231', 'jivirasgal@gmail.com', 341213);
@@ -150,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `pemeriksaan` (
   PRIMARY KEY (`id_pemeriksaan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Membuang data untuk tabel kliniku.pemeriksaan: ~5 rows (lebih kurang)
+-- Membuang data untuk tabel kliniku.pemeriksaan: ~4 rows (lebih kurang)
 INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `nik`, `id_pegawai`, `id_wilayah`, `keterangan`, `created_at`) VALUES
 	(1, '1231313', 1, 1, '1dasd', NULL),
 	(12, '1231313', 1, 2, 'qweqe', NULL),
@@ -167,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `pengobatan` (
   PRIMARY KEY (`id_pengobatan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Membuang data untuk tabel kliniku.pengobatan: ~6 rows (lebih kurang)
+-- Membuang data untuk tabel kliniku.pengobatan: ~8 rows (lebih kurang)
 INSERT INTO `pengobatan` (`id_pengobatan`, `id_obat`, `jml_obat`, `id_pemeriksaan`) VALUES
 	(10, 3, 1, 6),
 	(12, 4, 3, 6),
@@ -200,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `tindak_obat` (
   PRIMARY KEY (`id_tindak_obat`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
--- Membuang data untuk tabel kliniku.tindak_obat: ~4 rows (lebih kurang)
+-- Membuang data untuk tabel kliniku.tindak_obat: ~0 rows (lebih kurang)
 INSERT INTO `tindak_obat` (`id_tindak_obat`, `id_pengobatan`, `id_tindakan`) VALUES
 	(1, 18, 1),
 	(2, 18, 2),

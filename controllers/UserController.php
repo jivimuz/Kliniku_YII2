@@ -9,7 +9,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii;
 use yii\helpers\VarDumper;
-
+if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
+    return $this->redirect(['site/logout']);
+}
 /**
  * UserController implements the CRUD actions for User model.
  */

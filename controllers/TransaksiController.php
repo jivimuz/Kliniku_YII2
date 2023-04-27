@@ -14,6 +14,9 @@ use app\models\Tindakan;
 use app\models\Users;
 use app\models\Pengobatan;
 use app\models\TindakObat;
+if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
+    return $this->redirect(['site/logout']);
+}
 
 class TransaksiController extends Controller
 {
@@ -84,20 +87,22 @@ class TransaksiController extends Controller
     public function actionTambahPemeriksaan()
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
-        $model = new Pemeriksaan;
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->created_at = date('Y-m-d H:i:s');
-            if($cekPasien = Pasien::find()->where(['nik'=>$model->nik])->one()){
-            $model->save();
-            Yii::$app->session->setFlash('success', 'Data berhasil di Tambah');
-            return $this->redirect(['transaksi/pemeriksaan']);
-            }else{
-            Yii::$app->session->setFlash('error', 'NIK Tidak Terdaftar');
-            $model = new Pemeriksaan;
-            return $this->render('pemeriksaan/tambahpemeriksaan', compact('model'));
+        if(!empty($_GET['nik'])){
+            $cekPasien = Pasien::find()->where(['nik'=>$_GET['nik']])->one();
+            if(!empty($cekPasien)){
+                $model = new Pemeriksaan;
+                if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                    $model->created_at = date('Y-m-d H:i:s');
+                    $model->save();
+                    Yii::$app->session->setFlash('success', 'Data berhasil di Tambah');
+                    return $this->redirect(['transaksi/pemeriksaan']);
+                }else{
+                    return $this->render('pemeriksaan/tambahpemeriksaan', compact('model','cekPasien'));
+                }
             }
+        }else{
+        return $this->render('pemeriksaan/nikpasien');
         }
-        return $this->render('pemeriksaan/tambahpemeriksaan', compact('model'));
     }else{ return $this->goback(); }
     }
     public function actionEditPemeriksaan($id)
