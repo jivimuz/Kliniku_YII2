@@ -12,12 +12,16 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nama Wilayah</th>
+            <th scope="col">Biaya Daftar Pasien</th>
+            <th scope="col">Biaya Dokter</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <th><?= $data->id_wilayah ?></th>
             <th><?= $data->nama_wilayah ?></th>
+            <th><?= $data->harga_daftar ?></th>
+            <th><?= $data->harga_dokter ?></th>
         </tr>
     </tbody>
 </table>

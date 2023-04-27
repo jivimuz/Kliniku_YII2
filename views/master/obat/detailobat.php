@@ -18,6 +18,7 @@
             <th scope="col">ID</th>
             <th scope="col">Nama Obat</th>
             <th scope="col">Harga</th>
+            <th scope="col">Stock</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,7 @@
             <th><?= $data->id_obat ?></th>
             <th><?= $data->nama_obat ?></th>
             <th><?= buatRupiah($data->harga_obat) ?></th>
+            <th><?= $data->stock ?></th>
         </tr>
     </tbody>
 </table>

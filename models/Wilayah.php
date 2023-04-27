@@ -13,7 +13,7 @@ class Wilayah extends ActiveRecord
     public function rules()
     {
         return [
-            [['nama_wilayah'], 'required'],
+            [['nama_wilayah', 'harga_daftar', 'harga_dokter'], 'required'],
         ];
     }
 }

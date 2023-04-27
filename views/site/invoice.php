@@ -12,8 +12,8 @@
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <strong style="font-size: 24px;">Data Pemeriksaan</strong>
-            <span class="float-right" style="font-size: 20px;"><strong>ID : </strong><?= $data->id_pemeriksaan ?></span>
+            <strong style="font-size: 24px;">Data Pemeriksaan </strong>
+            <span class="float-right" style="font-size: 20px;"> <strong>ID : </strong><?= $data->id_pemeriksaan ?> <strong>Waktu : </strong><?= $data->created_at?></span>
         </div>
         <div class="card-body">
             <div class="row mb-4">

@@ -13,12 +13,13 @@ class Pemeriksaan extends ActiveRecord
     public function rules()
     {
         return [
-            [['id_pasien', 'id_pegawai', 'id_wilayah', 'keterangan'], 'required'],
+            [['nik', 'id_pegawai', 'id_wilayah'], 'required'],
+            [['created_at', 'keterangan'], 'safe'],
         ];
     }
     public function getPasien() 
     {
-        return $this->hasOne(Pasien::className(), ['id_pasien' => 'id_pasien']);
+        return $this->hasOne(Pasien::className(), ['nik' => 'nik']);
     }    
     public function getPegawai() 
     {

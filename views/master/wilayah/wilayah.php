@@ -3,6 +3,11 @@
     use yii\bootstrap4\Html;
     use yii\bootstrap4\ActiveForm;
     use yii\helpers\Url;
+
+    function buatRupiah($angka){
+      $hasil =  number_format($angka,0,',','.');
+      $hasil = $hasil.",-";
+      return $hasil;}
 ?>
 
 <div class="master-index">
@@ -19,6 +24,8 @@
             <tr>
             <th scope="col">ID</th>
             <th scope="col">Nama Wilayah</th>
+            <th scope="col">Biaya Pendaftaran</th>
+            <th scope="col">Biaya Dokter</th>
             <th scope="col">Pilihan</th>
             </tr>
         </thead>
@@ -29,6 +36,8 @@
           <tr>
             <th><?= $d->id_wilayah ?></th>
             <th><?= $d->nama_wilayah ?></th>
+            <th><?= buatRupiah($d->harga_daftar) ?></th>
+            <th><?= buatRupiah($d->harga_dokter) ?></th>
               <td>
                 <a class="btn btn-info" href="<?= Url::toRoute(['master/detail-wilayah', 'id' => $d->id_wilayah])?>">Detail</a>
                 <a class="btn btn-success" href="<?= Url::toRoute(['master/edit-wilayah', 'id' => $d->id_wilayah])?>">Edit</a>

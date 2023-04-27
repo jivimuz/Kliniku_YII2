@@ -4,7 +4,7 @@
     use yii\bootstrap4\ActiveForm;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
-    use app\models\Obat;
+    use app\models\Tindakan;
 ?>
 
 <h3>Pemeriksaan <?=$_GET['id']?></h3>
@@ -15,13 +15,14 @@ $form = ActiveForm::begin([
 ]) ?>
 
    
-    <?= $form->field($model, 'id_obat')->label('Obat')->dropDownList(
-    ArrayHelper::map(Obat::find()->all(), 'id_obat', 'nama_obat'), ['prompt'=>'Pilih Obat']) ?>
-
-    <?= $form->field($model, 'jml_obat')->label('Jumlah Obat')->textInput(['type' => 'number', 'value' => '1']) ?>
-
-    
-    <?= $form->field($model, 'id_pemeriksaan')->textInput(['type' => 'hidden', 'value' => $_GET['id']])?>
+        
+<?php
+$form = ActiveForm::begin([
+    'method' => 'post',
+]) ?>
+    <?= $form->field($model, 'id_pengobatan')->textInput(['type' => 'hidden', 'value' => $_GET['idp']])?>
+    <?= $form->field($model, 'id_tindakan')->label('Tindakan')->dropDownList(
+    ArrayHelper::map(Tindakan::find()->all(), 'id_tindakan', 'nama_tindakan'), ['prompt'=>'Pilih Tindakan']) ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

@@ -16,6 +16,7 @@ $form = ActiveForm::begin([
     <?= $form->field($model, 'nama_obat')->label('Nama obat') ?>
     
     <?= $form->field($model, 'harga_obat')->label('Harga obat')->input('number') ?>
+    <?= $form->field($model, 'stock')->label('Stock')->input('number') ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

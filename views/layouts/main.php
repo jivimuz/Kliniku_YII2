@@ -38,7 +38,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav nav items-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/']],
+            ['label' => 'Home', 'url' => ['/'],
+            'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ? 
             ['label' => 'Menu', 'url' => ['/site/login']]
             : 
@@ -55,7 +56,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             // ['label' => 'About', 'url' => ['/site/about']],
             // ['label' => 'Contact', 'url' => ['/site/contact']],
             [
-                'label' => 'Menu User',
+                'label' => 'Users   ',
                 'url' => ['user/index'],
                 'visible' => !Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1,
                 'template' => '<a href="{url}" class="href_class">{label}</a>',
@@ -85,6 +86,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ['label' => 'Pemeriksaan', 'url' => ['/transaksi/pemeriksaan']],
                 ]
             ],
+            [
+                'label' => 'Graph',
+                'url' => ['site/graph'],
+                'visible' => !Yii::$app->user->isGuest,
+                'template' => '<a href="{url}" class="href_class">{label}</a>',
+            ],
             
            
         ],
@@ -106,7 +113,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
-    <div class="container">
+    <div class="container ">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
             <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif ?>
@@ -118,7 +125,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <footer id="footer" class="mt-auto py-3 bg-light">
     <div class="container">
         <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; Kliniku <?= date('Y') ?></div>
+            <div class="col-md-6 text-center text-md-start">Jivimuz &copy; Kliniku <?= date('Y') ?></div>
             <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
         </div>
     </div>

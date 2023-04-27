@@ -62,7 +62,7 @@ class MasterController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
             Yii::$app->session->setFlash('info', 'Data dengan id '.$id.' berhasil di Edit');
-            return $this->redirect(['master/detail-obat', 'id' => $id]);
+            return $this->redirect(['master/obat', 'id' => $id]);
         }
         else{
             return $this->render('obat/editobat', compact('model'));
@@ -171,7 +171,7 @@ class MasterController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
             Yii::$app->session->setFlash('info', 'Data dengan id '.$id.' berhasil di Edit');
-            return $this->redirect(['master/detail-tindakan', 'id' => $id]);
+            return $this->redirect(['master/tindakan']);
         }
         else{
             return $this->render('tindakan/edittindakan', compact('model'));
@@ -279,7 +279,7 @@ class MasterController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
             Yii::$app->session->setFlash('info', 'Data dengan id '.$id.' berhasil di Edit');
-            return $this->redirect(['master/detail-wilayah', 'id' => $id]);
+            return $this->redirect(['master/wilayah', 'id' => $id]);
         }
         else{
             return $this->render('wilayah/editwilayah', compact('model'));

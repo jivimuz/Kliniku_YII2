@@ -13,6 +13,7 @@ use app\models\Pemeriksaan;
 use app\models\Tindakan;
 use app\models\Users;
 use app\models\Pengobatan;
+use app\models\TindakObat;
 
 class TransaksiController extends Controller
 {
@@ -65,7 +66,9 @@ class TransaksiController extends Controller
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
         $data = Pemeriksaan::find()
-        ->joinWith('pegawai')->all();
+        ->joinWith('pegawai')
+        ->orderBy(['id_pemeriksaan' => SORT_DESC])
+        ->all();
         return $this->render('pemeriksaan/pemeriksaan', compact('data'));
     }else{ return $this->goback(); }
     }
@@ -73,18 +76,26 @@ class TransaksiController extends Controller
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
         $data = Pemeriksaan::findOne($id);
-        $obats = Pengobatan::find()->joinWith('obat')->joinWith('tindakan')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
+        $obats = Pengobatan::find()->joinWith('obat')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
         return $this->render('pemeriksaan/detailpemeriksaan', compact('data', 'obats'));
     }else{ return $this->goback(); }
     }
+
     public function actionTambahPemeriksaan()
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
         $model = new Pemeriksaan;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->created_at = date('Y-m-d H:i:s');
+            if($cekPasien = Pasien::find()->where(['nik'=>$model->nik])->one()){
             $model->save();
             Yii::$app->session->setFlash('success', 'Data berhasil di Tambah');
             return $this->redirect(['transaksi/pemeriksaan']);
+            }else{
+            Yii::$app->session->setFlash('error', 'NIK Tidak Terdaftar');
+            $model = new Pemeriksaan;
+            return $this->render('pemeriksaan/tambahpemeriksaan', compact('model'));
+            }
         }
         return $this->render('pemeriksaan/tambahpemeriksaan', compact('model'));
     }else{ return $this->goback(); }
@@ -96,7 +107,7 @@ class TransaksiController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
             Yii::$app->session->setFlash('info', 'Data dengan id '.$id.' berhasil di Edit');
-            return $this->redirect(['transaksi/detail-pemeriksaan', 'id' => $id]);
+            return $this->redirect(['transaksi/pemeriksaan']);
         }
         else{
             return $this->render('pemeriksaan/editpemeriksaan', compact('model'));
@@ -107,7 +118,7 @@ class TransaksiController extends Controller
     public function actionPengobatan($id)
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
-        $data = Pengobatan::find()->joinWith('obat')->joinWith('tindakan')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
+        $data = Pengobatan::find()->joinWith('obat')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
         return $this->render('pengobatan/pengobatan', [
             'data' => $data, 'id' => $id
         ]);
@@ -118,8 +129,17 @@ class TransaksiController extends Controller
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
         $model = new Pengobatan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $cekQty = Obat::find()->where(['id_obat'=>$model->id_obat])->one(); 
+            if($cekQty->stock > 0 && $cekQty->stock >= $model->jml_obat){
+                $cekQty->stock -= $model->jml_obat;
+                $cekQty->save();
+                $model->save();
+                return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Stock tidak mencukupi, Stock tersisa $cekQty->stock");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
 
         return $this->render('pengobatan/createpengobatan', [
@@ -132,6 +152,36 @@ class TransaksiController extends Controller
     {
     if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
         $model = Pengobatan::findOne($idp);
+        TindakObat::deleteAll(['id_pengobatan'=>$idp]);
+        if (!$model) {
+            throw new NotFoundHttpException('Data not found.');
+        }
+        $cekQty = Obat::find()->where(['id_obat'=>$model->id_obat])->one();
+        $cekQty->stock += $model->jml_obat;
+        $cekQty->save();
+        $model->delete();
+
+        return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+    }else{ return $this->goback(); }
+    }
+
+    public function actionTindakobat($id, $idp)
+    {
+    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+        $model = new TindakObat();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
+        }
+        return $this->render('pengobatan/tindakobat', [
+            'model' => $model, 'id' => $id, 'idp' => $idp
+        ]);
+    }else{ return $this->goback(); }
+    }
+
+    public function actionTindakobatdelete($id, $ido)
+    {
+    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+        $model = TindakObat::findOne($ido);
         if (!$model) {
             throw new NotFoundHttpException('Data not found.');
         }
@@ -139,6 +189,7 @@ class TransaksiController extends Controller
 
         return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
     }else{ return $this->goback(); }
-
     }
+
+   
 }

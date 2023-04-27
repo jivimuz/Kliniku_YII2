@@ -1,106 +1,117 @@
 main > .container {
-    padding: 70px 15px 20px;
+  padding: 70px 15px 20px;
 }
 
 .footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+  background-color: #f5f5f5;
+  font-size: 0.9em;
+  height: 60px;
 }
 
 .footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .not-set {
-    color: #c55;
-    font-style: italic;
+  color: #c55;
+  font-style: italic;
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
-    content: '';
-    left: 3px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: solid 5px transparent;
-    margin: 4px 4px 2px 4px;
-    background: transparent;
+a.asc:after,
+a.desc:after {
+  content: "";
+  left: 3px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: solid 5px transparent;
+  margin: 4px 4px 2px 4px;
+  background: transparent;
 }
 
 a.asc:after {
-    border-bottom: solid 7px #212529;
-    border-top-width: 0;
+  border-bottom: solid 7px #212529;
+  border-top-width: 0;
 }
 
 a.desc:after {
-    border-top: solid 7px #212529;
-    border-bottom-width: 0;
+  border-top: solid 7px #212529;
+  border-bottom-width: 0;
 }
 
 .grid-view th {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .hint-block {
-    display: block;
-    margin-top: 5px;
-    color: #999;
+  display: block;
+  margin-top: 5px;
+  color: #999;
 }
 
 .error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
+  color: #a94442;
+  background: #fdf7f7;
+  border-left: 3px solid #eed3d7;
+  padding: 10px 20px;
+  margin: 0 0 15px 0;
 }
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
-    padding-top: 7px;
-    color: rgba(255, 255, 255, 0.5);
+  padding-top: 7px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 0;
-    }
+@media (max-width: 767px) {
+  .nav li > form > button.logout {
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 10px 0;
+  }
 }
 
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .nav > li > form > button.logout:focus {
-    outline: none;
+  outline: none;
 }
 
-.image-bg{
-    background-size: auto;
-    flex-wrap: wrap;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-image: url('https://png.pngtree.com/background/20220731/original/pngtree-white-abstract-business-background-picture-image_1908386.jpg');
+body {
+  background-size: cover;
+  background-image: url("https://png.pngtree.com/background/20220731/original/pngtree-white-abstract-business-background-picture-image_1908386.jpg");
 }
 
-.judul1{
-    font-weight: bold;
-    font-size: 50px;
-    letter-spacing: 0.4cm;
-    text-shadow: #fff 5px 5px;
+.judul1 {
+  font-weight: bold;
+  font-size: 50px;
+  letter-spacing: 0.4cm;
+  text-shadow: #fff 5px 5px;
 }
-.judul2{
-    font-size: 20px;
-    font-weight: bold;
+.judul2 {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.2cm;
+  text-shadow: #fdf7f7 2px 2px;
+  animation: animasi-text-spacing 2s ease-in-out infinite;
+}
+
+@keyframes animasi-text-spacing {
+  0% {
+    letter-spacing: 0.2cm;
+  }
+  50% {
     letter-spacing: 0.4cm;
-    text-shadow: #fdf7f7 2px 2px;
+  }
+  100% {
+    letter-spacing: 0.2cm;
+  }
 }

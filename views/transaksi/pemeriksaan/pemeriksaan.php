@@ -29,6 +29,7 @@
         <tbody>
           <?php
           foreach($data as $d){
+            // $namaPasien = Pasien::find()->where(['nik'->$d->nik])->one(); 
           ?>
           <tr>
             <th><?= $d->id_pemeriksaan ?></th>

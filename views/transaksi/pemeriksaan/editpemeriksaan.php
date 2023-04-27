@@ -18,10 +18,23 @@ $form = ActiveForm::begin([
     'action' => Url::to(['transaksi/edit-pemeriksaan', 'id' => $model->id_pemeriksaan]),
 ]) ?>
 
-    <?= $form->field($model, 'id_pasien')->label('Pasien')->dropDownList(
-    ArrayHelper::map(Pasien::find()->all(), 'id_pasien', 'nama_pasien')) ?>
+<?php
+        $listPasien = Pasien::find()->select(['nik', 'nama_pasien'])->column();
+
+        echo $form->field($model, 'nik')->label('NIK Pasien')->widget(\yii\jui\AutoComplete::classname(), [
+            'options' => ['class' => 'form-control'],
+            'clientOptions' => [
+                'source' => $listPasien,
+                'minLength' => 2,
+                
+                'prompt' => 'Pilih Pasien',
+            ],
+        ]);
+
+
+?>
     <?= $form->field($model, 'id_pegawai')->label('Pegawai')->dropDownList(
-    ArrayHelper::map(Pegawai::find()->all(), 'id_pegawai', 'id_user')) ?>
+    ArrayHelper::map(Pegawai::find()->all(), 'id_pegawai', 'email_pegawai')) ?>
     
     
     <?= $form->field($model, 'keterangan')->label('Keterangan (tambahan)') ?>

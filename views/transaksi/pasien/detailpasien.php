@@ -11,6 +11,7 @@
     <thead class="thead-light">
         <tr>
             <th scope="col">ID</th>
+            <th scope="col">NIK</th>
             <th scope="col">Nama</th>
             <th scope="col">TTL</th>
             <th scope="col">Jenis Kelamin</th>
@@ -21,6 +22,7 @@
     <tbody>
         <tr>
             <th><?= $data->id_pasien ?></th>
+            <th><?= $data->nik ?></th>
             <th><?= $data->nama_pasien ?></th>
             <th><?= $data->ttl_pasien ?></th>
             <th><?= $data->jenis_kelamin_pasien ?></th>

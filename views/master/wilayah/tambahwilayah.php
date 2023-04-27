@@ -14,7 +14,8 @@ $form = ActiveForm::begin([
 ]) ?>
 
     <?= $form->field($model, 'nama_wilayah')->label('Nama Wilayah') ?>
-
+    <?= $form->field($model, 'harga_daftar')->label('Biaya Pendaftaran')->input('number') ?>
+    <?= $form->field($model, 'harga_dokter')->label('Biaya Dokter')->input('number') ?>
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-success']) ?>

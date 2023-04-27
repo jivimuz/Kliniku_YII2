@@ -14,6 +14,7 @@ class Obat extends ActiveRecord
     {
         return [
             [['nama_obat', 'harga_obat'], 'required'],
+            [['stock', 'harga_obat'], 'integer'],
         ];
     }
 }

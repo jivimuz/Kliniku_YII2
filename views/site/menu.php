@@ -8,7 +8,6 @@ use app\models\User;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Url;
-use dosamigos\highcharts\HighCharts;
 
 /** @var yii\web\View $this */
 /** @var app\models\UserSearch $searchModel */
@@ -19,77 +18,45 @@ $this->title = 'Menu';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
    
-    
-    <hr>
     <div class="body-content">
-    <div class="container">
-            <div class="grafik">
-            <?php
-                foreach($data as $values){
-                    $a[0]= ($values['nama_obat']);
-                    $c[]= ($values['nama_obat']);
-                    $b[]= array('type'=> 'column', 'name' =>$values['nama_obat'], 'data' => array((int)$values['jml']));
-                }
-                echo
-                HighCharts::widget([
-                    'clientOptions' => [
-                        'chart'=>[
-                            'type'=>'bar'
-                        ],
-                        'title' => ['text' => 'Data Obat yang sering digunakan'],
-                        'xAxis' => [
-                            'categories' => ['Jenis Obat']
-                        ],
-                        'yAxis' => [
-                            'title' => ['text' => 'Jumlah Penggunaan']
-                        ],
-                        'series' => $b,
-                    ]
-                ]);
-            ?>
-            </div>
-
-
-        </div>
+    
         <div class="row">
+        <div class="col-lg-5">
+            <img src="/images/dokter.png" class="mx-auto d-block" width="300px" alt="">
+        </div>
+        <div class="col-lg-7">
         <?php  
         $role = Yii::$app->session->get('users')->role;
         if($role == 1 ||$role == 2 ){?>
-            <div class="col-lg-5">
+            <div class="col-lg-12">
                 <h2>Master</h2>
-                <div class="col-lg-6">
+            </div>
+            <div class="col-lg-12">
         <?php if($role == 1){?>
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['user/index']) ?>">User &raquo;</a></p>
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['user/index']) ?>">User &raquo;</a>
         <?php }?>
             
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/wilayah']) ?>">Wilayah &raquo;</a></p>
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/wilayah']) ?>">Wilayah &raquo;</a>
         
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/obat']) ?>">Obat &raquo;</a></p>
-            </div>
-            <div class="col-lg-6">
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/pegawai']) ?>">Pegawai &raquo;</a></p>
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/tindakan']) ?>">Tindakan &raquo;</a></p>
-            </div>
-            </div>
-            <div class="col-lg-2">
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/obat']) ?>">Obat &raquo;</a>
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/pegawai']) ?>">Pegawai &raquo;</a>
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['master/tindakan']) ?>">Tindakan &raquo;</a>
+            <hr>
+
             </div>
         <?php } 
         if($role == 1 || $role == 3){ ?>
-            <div class="col-lg-5">
+            <div class="col-lg-12">
                 <h2>Transaksi</h2>
-                
-            
-            <div class="col-lg-6">
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pasien']) ?>">Pasien &raquo;</a></p>
             </div>
-            <div class="col-lg-6">
-                <p><a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pemeriksaan']) ?>">Pemeriksaan &raquo;</a></p>
-            </div>
+            <div class="col-lg-12">
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pasien']) ?>">Pasien &raquo;</a>
+                <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pemeriksaan']) ?>">Pemeriksaan &raquo;</a>
             </div>
         <?php } ?>
             
+        </div>
         </div>
        
     </div>

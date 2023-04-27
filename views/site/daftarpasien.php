@@ -1,19 +1,23 @@
 <?php
-    $this->title = 'Edit Data Pasien';
+    $this->title = 'Tambah Data Pasien';
     use yii\bootstrap4\Html;
     use yii\bootstrap4\ActiveForm;
     use yii\helpers\Url;
 ?>
 
-<h3>Edit Data Pasien</h3>
-
+<h3>Tambah Data Pasien</h3>
+<?php if(!empty($alert)): ?>
+            <div class="alert alert-success">
+                <?= $alert ?>
+            </div>
+        <?php endif; ?>
 <?php
 $form = ActiveForm::begin([
     'method' => 'post',
-    'action' => Url::to(['transaksi/edit-pasien', 'id' => $model->id_pasien]),
+    'action' => Url::to(['daftarpasien']),
 ]) ?>
 
-    <?= $form->field($model, 'nik')->label('NIK')->input('text', ['readonly' => true]) ?>
+    <?= $form->field($model, 'nik')->label('NIK')->input('number') ?>
     <?= $form->field($model, 'nama_pasien')->label('Nama') ?>
     <?= $form->field($model, 'ttl_pasien')->label('Tempat, Tanggal Lahir')->input('date') ?>
     <?= $form->field($model, 'jenis_kelamin_pasien')->label('Jenis Kelamin')->radioList([0 => 'Perempuan', 1 => 'Laki - Laki']); ?>

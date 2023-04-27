@@ -12,6 +12,9 @@ use app\models\ContactForm;
 use app\models\User;
 use app\models\TblUser;
 use yii\helpers\Redirect;
+use app\models\Pasien;
+use app\models\Pemeriksaan;
+use app\models\Pengobatan;
 
 class SiteController extends Controller
 {
@@ -67,7 +70,7 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    
+   
     /**
      * Login action.
      *
@@ -145,10 +148,49 @@ class SiteController extends Controller
     
      public function actionMenu()
     {
+        
+        return $this->render('menu');
+    }
+
+    public function actionGraph()
+    {
         $data = Yii::$app->db->createCommand(
             'select nama_obat, count(pengobatan.id_obat) as jml from pengobatan 
             JOIN obat ON pengobatan.id_obat = obat.id_obat group by pengobatan.id_obat'
             )->queryAll();
-        return $this->render('menu',  ['data' => $data]);
+            
+        $data2 = Yii::$app->db->createCommand(
+            'select id_user, count(pemeriksaan.id_pegawai) as jml from pemeriksaan 
+            JOIN pegawai ON pemeriksaan.id_pegawai = pegawai.id_pegawai group by pemeriksaan.id_pegawai'
+            )->queryAll();
+        return $this->render('graph',  ['data' => $data,'data2' => $data2]);
     }
+    public function actionDaftarpasien()
+    {
+        $model = new Pasien;
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->save();
+            Yii::$app->session->setFlash('success', 'Data berhasil di Tambah, Selanjutnya silahkan menunggu anjuran dokter');
+            return $this->goBack();
+        }
+        return $this->render('daftarpasien', compact('model'));
+    }
+
+    public function actionCekinvoice(){
+        return $this->render('cekinvoice');
+    }
+
+    public function actionInvoice($nik)
+    {
+        $data = Pemeriksaan::find()->where(['nik'=>$nik])->orderBy(['id_pemeriksaan' => SORT_DESC])->one();
+        if(empty($data)){
+            Yii::$app->session->setFlash('error', 'Data NIK tidak terdaftar');
+            return $this->render('cekinvoice');
+        }
+        $obats = Pengobatan::find()->joinWith('obat')->where(['id_pemeriksaan'=>$data->id_pemeriksaan])->orderBy(['pengobatan.id_pemeriksaan' => SORT_DESC])->all();
+        
+        return $this->render('invoice', compact('data', 'obats'));
+    }
+
+    
 }

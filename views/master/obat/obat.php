@@ -25,6 +25,7 @@
             <th scope="col">ID</th>
             <th scope="col">Nama Obat</th>
             <th scope="col">Harga</th>
+            <th scope="col">Stock</th>
             <th scope="col">Pilihan</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
             <th><?= $d->id_obat ?></th>
             <th><?= $d->nama_obat ?></th>
             <th><?= buatRupiah($d->harga_obat) ?></th>
+            <th><?= $d->stock ?></th>
               <td>
                 <a class="btn btn-info" href="<?= Url::toRoute(['master/detail-obat', 'id' => $d->id_obat])?>">Detail</a>
                 <a class="btn btn-success" href="<?= Url::toRoute(['master/edit-obat', 'id' => $d->id_obat])?>">Edit</a>
@@ -47,6 +49,5 @@
           ?>
         </tbody>
     </table>
-
     </div>
 </div>

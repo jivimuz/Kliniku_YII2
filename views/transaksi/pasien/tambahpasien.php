@@ -13,6 +13,7 @@ $form = ActiveForm::begin([
     'action' => Url::to(['transaksi/tambah-pasien']),
 ]) ?>
 
+    <?= $form->field($model, 'nik')->label('NIK')->input('number') ?>
     <?= $form->field($model, 'nama_pasien')->label('Nama') ?>
     <?= $form->field($model, 'ttl_pasien')->label('Tempat, Tanggal Lahir')->input('date') ?>
     <?= $form->field($model, 'jenis_kelamin_pasien')->label('Jenis Kelamin')->radioList([0 => 'Perempuan', 1 => 'Laki - Laki']); ?>

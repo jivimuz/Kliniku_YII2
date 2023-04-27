@@ -38,11 +38,10 @@ class Pengobatan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_pengobatan' => 'Id Pengobatan',
+            'id_pengobatan' => '',
             'id_obat' => 'Id Obat',
             'jml_obat' => 'Jumlah Obat',
-            'id_pengobatan' => 'Id Pengobatan',
-            'id_pemeriksaan' => 'Id Pemeriksaan',
+            'id_pemeriksaan' => '',
         ];
     }
     public function getObat()
@@ -53,8 +52,5 @@ class Pengobatan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Pemeriksaan::class, ['id_pemeriksaan' => 'id_pemeriksaan']);
     }
-    public function getTindakan()
-    {
-        return $this->hasOne(Tindakan::class, ['id_tindakan' => 'id_tindakan']);
-    }
+   
 }

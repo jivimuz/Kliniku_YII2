@@ -16,10 +16,10 @@
         <thead class="thead-light">
           <tr>
             <th scope="col">ID</th>
+            <th scope="col">NIK</th>
             <th scope="col">Nama</th>
             <th scope="col">TTL</th>
             <th scope="col">Jenis Kelamin</th>
-            <th scope="col">Alamat</th>
             <th scope="col">Telepon</th>
             <th scope="col">Pilihan</th>
           </tr>
@@ -30,6 +30,7 @@
           ?>
           <tr>
             <th><?= $d->id_pasien ?></th>
+            <th><?= $d->nik ?></th>
             <th><?= $d->nama_pasien ?></th>
             <th><?= $d->ttl_pasien ?></th>
             <th>
@@ -39,7 +40,6 @@
                   Laki - Laki
               <?php endif; ?>
             </th>
-            <th><?= $d->alamat_pasien ?></th>
             <th><?= $d->telepon_pasien ?></th>
               <td>
                 <!-- <a class="btn btn-info" href="<?= Url::toRoute(['transaksi/detail-pasien', 'id' => $d->id_pasien])?>">Detail</a> -->
