@@ -20,7 +20,7 @@ $form = ActiveForm::begin([
     
     <?= $form->field($model, 'telepon_pegawai')->label('Telepon')->input('number') ?>
 
-    <?= $form->field($model, 'email_pegawai')->label('NIP')->input('email') ?>
+    <?= $form->field($model, 'email_pegawai')->label('Email')->input('email') ?>
 
     <?= $form->field($model, 'nip_pegawai')->label('NIP')->input('number') ?>
 

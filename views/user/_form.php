@@ -20,8 +20,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?php if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
-     echo $form->field($model, 'role')->dropDownList(['1' => 'Admin', '2' => 'User', '3' => 'Pegawai']) ;
+    <?php if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role == 1){
+     echo $form->field($model, 'role')->dropDownList(['1' => 'Admin', '2' => 'Master', '3' => 'Pegawai']) ;
     }
     ?>
     <br>

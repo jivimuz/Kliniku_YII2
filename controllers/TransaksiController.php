@@ -14,9 +14,8 @@ use app\models\Tindakan;
 use app\models\Users;
 use app\models\Pengobatan;
 use app\models\TindakObat;
-if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
-    return $this->redirect(['site/logout']);
-}
+
+
 
 class TransaksiController extends Controller
 {
@@ -25,7 +24,7 @@ class TransaksiController extends Controller
     // ========================================================Pasien========================================================
     public function actionPasien()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $data = Pasien::find()->all();
         return $this->render('pasien/pasien', compact('data'));
     }else{ return $this->goback(); }
@@ -37,7 +36,7 @@ class TransaksiController extends Controller
     // }
     public function actionTambahPasien()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = new Pasien;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -49,7 +48,7 @@ class TransaksiController extends Controller
     }
     public function actionEditPasien($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = Pasien::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -67,7 +66,7 @@ class TransaksiController extends Controller
     // ========================================================Pemeriksaan========================================================
     public function actionPemeriksaan()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $data = Pemeriksaan::find()
         ->joinWith('pegawai')
         ->orderBy(['id_pemeriksaan' => SORT_DESC])
@@ -77,7 +76,7 @@ class TransaksiController extends Controller
     }
     public function actionDetailPemeriksaan($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $data = Pemeriksaan::findOne($id);
         $obats = Pengobatan::find()->joinWith('obat')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
         return $this->render('pemeriksaan/detailpemeriksaan', compact('data', 'obats'));
@@ -86,7 +85,7 @@ class TransaksiController extends Controller
 
     public function actionTambahPemeriksaan()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         if(!empty($_GET['nik'])){
             $cekPasien = Pasien::find()->where(['nik'=>$_GET['nik']])->one();
             if(!empty($cekPasien)){
@@ -99,6 +98,9 @@ class TransaksiController extends Controller
                 }else{
                     return $this->render('pemeriksaan/tambahpemeriksaan', compact('model','cekPasien'));
                 }
+            }else{
+                
+                return $this->render('pemeriksaan/nikpasien');
             }
         }else{
         return $this->render('pemeriksaan/nikpasien');
@@ -107,7 +109,7 @@ class TransaksiController extends Controller
     }
     public function actionEditPemeriksaan($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = Pemeriksaan::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -122,7 +124,7 @@ class TransaksiController extends Controller
 
     public function actionPengobatan($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $data = Pengobatan::find()->joinWith('obat')->where(['pengobatan.id_pemeriksaan'=>$id])->all();
         return $this->render('pengobatan/pengobatan', [
             'data' => $data, 'id' => $id
@@ -131,7 +133,7 @@ class TransaksiController extends Controller
     }
     public function actionCreatepengobatan($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = new Pengobatan();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -155,7 +157,7 @@ class TransaksiController extends Controller
 
     public function actionPengobatandelete($id, $idp)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = Pengobatan::findOne($idp);
         TindakObat::deleteAll(['id_pengobatan'=>$idp]);
         if (!$model) {
@@ -172,7 +174,7 @@ class TransaksiController extends Controller
 
     public function actionTindakobat($id, $idp)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = new TindakObat();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['transaksi/pengobatan', 'id' => $id]);
@@ -185,7 +187,7 @@ class TransaksiController extends Controller
 
     public function actionTindakobatdelete($id, $ido)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
         $model = TindakObat::findOne($ido);
         if (!$model) {
             throw new NotFoundHttpException('Data not found.');

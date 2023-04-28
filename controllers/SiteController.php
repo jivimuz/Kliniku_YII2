@@ -16,9 +16,7 @@ use app\models\Pasien;
 use app\models\Pemeriksaan;
 use app\models\Pengobatan;
 
-if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
-    return $this->redirect(['site/logout']);
-}
+
 
 class SiteController extends Controller
 {
@@ -91,8 +89,10 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $user_id = TblUser::find()->where(['username'=>$model->username])->one();
             if($user_id !== null){
-                Yii::$app->session->set('users', $user_id);
+                // var_dump($user_id);
+                // Yii::$app->session->set('users', $user_id);
                 $model->login();
+             return $this->redirect(['site/menu']);
             }else{
                 return $this->render('login', [
                     'model' => $model,
@@ -100,7 +100,6 @@ class SiteController extends Controller
             }
             
             // return $this->render('menu');
-        return $this->redirect(['site/menu']);
         }
 
         return $this->render('login', [
@@ -116,7 +115,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        Yii::$app->session->remove('users');
+        // Yii::$app->session->remove('users');
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -153,7 +152,11 @@ class SiteController extends Controller
      public function actionMenu()
     {
         
-        return $this->render('menu');
+        if(!Yii::$app->user->isGuest){
+            return $this->render('menu');
+        }else{
+            return $this->goBack();
+        }
     }
 
     public function actionGraph()

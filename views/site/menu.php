@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-lg-7">
         <?php  
-        $role = Yii::$app->session->get('users')->role;
+        $role = Yii::$app->user->identity->role;
         if($role == 1 ||$role == 2 ){?>
             <div class="col-lg-12">
                 <h2>Master</h2>
@@ -53,9 +53,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-lg-12">
                 <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pasien']) ?>">Pasien &raquo;</a>
                 <a class="btn btn-outline-secondary" href="<?= Yii::$app->urlManager->createUrl(['transaksi/pemeriksaan']) ?>">Pemeriksaan &raquo;</a>
+            <hr>
             </div>
         <?php } ?>
-            
+           
         </div>
         </div>
        

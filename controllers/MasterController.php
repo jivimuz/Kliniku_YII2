@@ -12,9 +12,7 @@ use app\models\Pasien;
 use app\models\Pemeriksaan;
 use app\models\Tindakan;
 use app\models\Users;
-if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
-    return $this->redirect(['site/logout']);
-}
+
 class MasterController extends Controller
 {
     // ========================================================Obat========================================================
@@ -22,21 +20,21 @@ class MasterController extends Controller
     // ========================================================Obat========================================================
     public function actionObat()
     {   
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Obat::find()->all();
         return $this->render('obat/obat', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionDetailObat($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Obat::findOne($id);
         return $this->render('obat/detailobat', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionHapusObat($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Obat::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -47,7 +45,7 @@ class MasterController extends Controller
     }
     public function actionTambahObat()
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = new Obat;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -60,7 +58,7 @@ class MasterController extends Controller
     }
     public function actionEditObat($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = Obat::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -77,21 +75,21 @@ class MasterController extends Controller
     // ========================================================Pegawai========================================================
     public function actionPegawai()
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Pegawai::find()->all();
         return $this->render('pegawai/pegawai', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionDetailPegawai($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Pegawai::findOne($id);
         return $this->render('pegawai/detailpegawai', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionHapusPegawai($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Pegawai::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -102,7 +100,7 @@ class MasterController extends Controller
     }
     public function actionTambahPegawai()
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = new Pegawai;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -114,7 +112,7 @@ class MasterController extends Controller
     }
     public function actionEditPegawai($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = Pegawai::findOne($id);
         $data = ArrayHelper::map(Users::find()->asArray()->all(), 'id_user', 'nama_user');
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -132,21 +130,21 @@ class MasterController extends Controller
     // ========================================================tindakan========================================================
     public function actionTindakan()
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Tindakan::find()->all();
         return $this->render('tindakan/tindakan', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionDetailTindakan($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Tindakan::findOne($id);
         return $this->render('tindakan/detailtindakan', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionHapusTindakan($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Tindakan::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -157,7 +155,7 @@ class MasterController extends Controller
     }
     public function actionTambahTindakan()
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = new Tindakan;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -169,7 +167,7 @@ class MasterController extends Controller
     }
     public function actionEditTindakan($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $model = Tindakan::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -186,21 +184,21 @@ class MasterController extends Controller
     // ========================================================users========================================================
     public function actionUsers()
     {
-        if(Yii::$app->session->get('users')->role == 1){
+        if(Yii::$app->user->identity->role== 1){
             $data = Users::find()->all();
         return $this->render('users/users', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionDetailUsers($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 ){
+        if(Yii::$app->user->identity->role== 1 ){
             $data = Users::findOne($id);
         return $this->render('users/detailusers', compact('data'));
         }else{ return $this->goback(); }
     }
     public function actionHapusUsers($id)
     {
-        if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+        if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
             $data = Users::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -211,7 +209,7 @@ class MasterController extends Controller
     }
     public function actionTambahUsers()
     {
-    if(Yii::$app->session->get('users')->role == 1 ){
+    if(Yii::$app->user->identity->role== 1 ){
             $model = new Users;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -223,7 +221,7 @@ class MasterController extends Controller
     }
     public function actionEditUsers($id)
     {
-    if(Yii::$app->session->get('users')->role == 1  ){
+    if(Yii::$app->user->identity->role== 1  ){
         $model = Users::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -240,21 +238,21 @@ class MasterController extends Controller
     // ========================================================wilayah========================================================
     public function actionWilayah()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Wilayah::find()->all();
         return $this->render('wilayah/wilayah', compact('data'));
     }else{ return $this->goback(); }
     }
     public function actionDetailWilayah($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Wilayah::findOne($id);
         return $this->render('wilayah/detailwilayah', compact('data'));
     }else{ return $this->goback(); }
     }
     public function actionHapusWilayah($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Wilayah::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -265,7 +263,7 @@ class MasterController extends Controller
     }
     public function actionTambahWilayah()
     {  
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $model = new Wilayah;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -277,7 +275,7 @@ class MasterController extends Controller
     }
     public function actionEditWilayah($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $model = Wilayah::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -294,21 +292,21 @@ class MasterController extends Controller
     // ========================================================pasien========================================================
     public function actionPasien()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Pasien::find()->all();
         return $this->render('pasien/pasien', compact('data'));
     }else{ return $this->goback(); }
     }
     public function actionDetailPasien($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Pasien::findOne($id);
         return $this->render('pasien/detailpasien', compact('data'));
     }else{ return $this->goback(); }
     }
     public function actionHapusPasien($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $data = Pasien::findOne($id);
         if ($data->delete()) {
             Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -319,7 +317,7 @@ class MasterController extends Controller
     }
     public function actionTambahPasien()
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $model = new Pasien;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -331,7 +329,7 @@ class MasterController extends Controller
     }
     public function actionEditPasien($id)
     {
-    if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 2 ){
+    if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 2 ){
         $model = Pasien::findOne($id);
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             $model->save();
@@ -349,21 +347,21 @@ class MasterController extends Controller
     // ========================================================pemeriksaan========================================================
     // public function actionPemeriksaan()
     // {
-    // if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    // if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
     //     $data = Pemeriksaan::find()->all();
     //     return $this->render('pemeriksaan/pemeriksaan', compact('data'));
     // }
     // }
     // public function actionDetailPemeriksaan($id)
     // {
-    // if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    // if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
     //     $data = Pemeriksaan::findOne($id);
     //     return $this->render('pemeriksaan/detailpemeriksaan', compact('data'));
     // }
     // }
     // public function actionHapusPemeriksaan($id)
     // {
-    // if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    // if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
     //     $data = Pemeriksaan::findOne($id);
     //     if ($data->delete()) {
     //         Yii::$app->session->setFlash('danger', 'Data dengan id '.$id.' berhasil di Hapus');
@@ -374,7 +372,7 @@ class MasterController extends Controller
     // }
     // public function actionTambahPemeriksaan()
     // {
-    // if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    // if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
     //     $model = new Pemeriksaan;
     //     if ($model->load(Yii::$app->request->post()) && $model->validate()) {
     //         $model->save();
@@ -386,7 +384,7 @@ class MasterController extends Controller
     // }
     // public function actionEditPemeriksaan($id)
     // {
-    // if(Yii::$app->session->get('users')->role == 1 || Yii::$app->session->get('users')->role == 3 ){
+    // if(Yii::$app->user->identity->role== 1 || Yii::$app->user->identity->role== 3 ){
     //     $model = Pemeriksaan::findOne($id);
     //     if ($model->load(Yii::$app->request->post()) && $model->validate()) {
     //         $model->save();

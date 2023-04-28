@@ -9,9 +9,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii;
 use yii\helpers\VarDumper;
-if(!Yii::$app->user->isGuest && !Yii::$app->session->get('users')){
-    return $this->redirect(['site/logout']);
-}
+
+
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -45,7 +44,7 @@ class UserController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role== 1){
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -75,7 +74,7 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role== 1){
             $model = new ListUser();
 
         if (($model->load(Yii::$app->request->post()))) {
@@ -108,7 +107,7 @@ class UserController extends Controller
      */
     public function actionUpdate($id_user)
     {
-        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role== 1){
             $model = $this->findModel($id_user);
 
         if (($model->load(Yii::$app->request->post()))) {
@@ -134,7 +133,7 @@ class UserController extends Controller
      */
     public function actionDelete($id_user)
     {
-        if(!Yii::$app->user->isGuest && Yii::$app->session->get('users')->role == 1){
+        if(!Yii::$app->user->isGuest && Yii::$app->user->identity->role== 1){
             $this->findModel($id_user)->delete();
 
         return $this->redirect(['index']);
